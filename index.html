@@ -11,7 +11,22 @@
 </head>
 
 <body>
-
+    <form>
+        <h1>Weather App</h1>
+        <p class="form-divider">
+            <label for="city">City Name</label>
+            <input type="search" name="city" id="city">
+        </p>
+        <p class="form-divider">
+            <label for="units">Units of Measurement</label>
+            <select name="units" id="units">
+                <option value="metric">°C, km - Metric</option>
+                <option value="us">°F, miles - US</option>
+                <option value="uk">°C, miles - UK</option>
+            </select>
+        </p>
+        <input type="submit" value="Search">
+    </form>
 </body>
 
 </html>
