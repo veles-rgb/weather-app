@@ -7,6 +7,7 @@ const unitSelect = document.querySelector("select");
 let cityInput = null;
 let tempUnit = null;
 let speedUnit = null;
+let distanceUnit = null;
 
 
 // Listen for form submit
@@ -32,12 +33,15 @@ async function renderInfo() {
     if (unitSelect.value === "metric") {
         tempUnit = "°C";
         speedUnit = "km/h";
+        distanceUnit = "km";
     } else if (unitSelect.value === "us") {
         tempUnit = "°F";
         speedUnit = "mp/h";
+        distanceUnit = "miles";
     } else if (unitSelect.value === "uk") {
         tempUnit = "°C";
         speedUnit = "mp/h";
+        distanceUnit = "miles";
     }
 
     // Clear body elements (form)
@@ -115,7 +119,7 @@ async function renderInfo() {
     riseSetDate.textContent = prettyDate;
     // sunrise / sunset icon
     const riseSetIcon = document.createElement("img");
-    riseSetIcon.setAttribute("id", "rise-set-icon");
+    riseSetIcon.classList.add("other-info-icon");
     riseSetIcon.src = "/assets/icons/riseset.svg";
     // Sunrise Sunset inner info divs
     const riseSetInner = document.createElement("div");
@@ -147,21 +151,112 @@ async function renderInfo() {
     const windInfo = document.createElement("div");
     windInfo.classList.add("other-info-div");
     windInfo.setAttribute("id", "wind-info");
+    const windInfoText = document.createElement("div");
+    windInfoText.setAttribute("id", "wind-info-text");
+    windInfoText.textContent = "Wind";
+    const windInfoSpeed = document.createElement("div");
+    windInfoSpeed.setAttribute("id", "wind-info-speed");
+    windInfoSpeed.textContent = `Speed: ${weather.currentConditions.windspeed} ${speedUnit}`;
+    const windSpeedIcon = document.createElement("img");
+    windSpeedIcon.classList.add("other-info-icon");
+    windSpeedIcon.src = "/assets/icons/windspeed.svg";
+    const windGust = document.createElement("div");
+    windGust.setAttribute("id", "wind-gust-info");
+    windGust.textContent = `Gust: ${weather.currentConditions.windgust} ${speedUnit}`;
 
     // Humidity info
     const humidityInfo = document.createElement("div");
     humidityInfo.classList.add("other-info-div");
     humidityInfo.setAttribute("id", "humidity-info");
+    const humidityInfoText = document.createElement("div");
+    humidityInfoText.setAttribute("id", "humidity-info-text");
+    humidityInfoText.textContent = "Humidity";
+    const humidityIcon = document.createElement("img");
+    humidityIcon.classList.add("other-info-icon");
+    humidityIcon.src = "/assets/icons/humidity.svg";
+    const humidity = document.createElement("div");
+    humidity.setAttribute("id", "humidity");
+    humidity.textContent = weather.currentConditions.humidity + "%";
+    const humidityLevel = document.createElement("div");
+    let humidityCategory = null;
+    if (weather.currentConditions.humidity < 30) {
+        humidityCategory = "Low";
+    } else if (weather.currentConditions.humidity >= 30 && weather.currentConditions.humidity < 60) {
+        humidityCategory = "Medium";
+    } else {
+        humidityCategory = "High";
+    }
+    humidityLevel.textContent = humidityCategory;
 
     // Visibility info
     const visibilityInfo = document.createElement("div");
     visibilityInfo.classList.add("other-info-div");
     visibilityInfo.setAttribute("id", "visibility-info");
+    const visibilityInfoText = document.createElement("div");
+    visibilityInfoText.setAttribute("id", "visibility-info-text");
+    visibilityInfoText.textContent = "Visibility";
+    const visibilityIcon = document.createElement("img");
+    visibilityIcon.classList.add("other-info-icon");
+    visibilityIcon.src = "/assets/icons/visibility.svg";
+    const visibilityDistance = document.createElement("div");
+    visibilityDistance.setAttribute("id", "visibility");
+    visibilityDistance.textContent = `${weather.currentConditions.visibility} ${distanceUnit}`;
+    const visibilityLevel = document.createElement("div");
+    const visibility = weather.currentConditions.visibility;
+    let visibilityCategory = null;
+    if (unitSelect.value === "metric") {
+        // Visibility is in kilometers
+        if (visibility > 10) {
+            visibilityCategory = "High";
+        } else if (visibility >= 4 && visibility <= 10) {
+            visibilityCategory = "Medium";
+        } else if (visibility >= 1 && visibility < 4) {
+            visibilityCategory = "Low";
+        } else if (visibility < 1) {
+            visibilityCategory = "Very Low";
+        }
+    } else if (unitSelect.value === "us" || unitSelect.value === "uk") {
+        // Visibility is in miles
+        if (visibility > 6.2) {
+            visibilityCategory = "High";
+        } else if (visibility >= 2.5 && visibility <= 6.2) {
+            visibilityCategory = "Medium";
+        } else if (visibility >= 0.6 && visibility < 2.5) {
+            visibilityCategory = "Low";
+        } else if (visibility < 0.6) {
+            visibilityCategory = "Very Low";
+        }
+    }
+    visibilityLevel.textContent = visibilityCategory;
 
-    // UV Index
+    // UV Index info
     const uvIndexInfo = document.createElement("div");
     uvIndexInfo.classList.add("other-info-div");
     uvIndexInfo.setAttribute("id", "uvIndex-info");
+    const uvIndexInfoText = document.createElement("div");
+    uvIndexInfoText.setAttribute("id", "uvindex-info-text");
+    uvIndexInfoText.textContent = "UV Index";
+    const uvIndexIcon = document.createElement("img");
+    uvIndexIcon.classList.add("other-info-icon");
+    uvIndexIcon.src = "/assets/icons/uvindex.svg";
+    const uvIndexIndex = document.createElement("div");
+    uvIndexIndex.setAttribute("id", "uv-index");
+    uvIndexIndex.textContent = weather.currentConditions.uvindex;
+    const uvIndexLevel = document.createElement("div");
+    const uvIndex = weather.currentConditions.uvindex;
+    let uvIndexCategory = null;
+    if (uvIndex <= 2) {
+        uvIndexCategory = "Low";
+    } else if (uvIndex <= 5) {
+        uvIndexCategory = "Moderate";
+    } else if (uvIndex <= 7) {
+        uvIndexCategory = "High";
+    } else if (uvIndex <= 10) {
+        uvIndexCategory = "Very High";
+    } else {
+        uvIndexCategory = "Extreme";
+    }
+    uvIndexLevel.textContent = uvIndexCategory;
 
     // Append elements
     document.body.appendChild(weatherContainer);
@@ -170,23 +265,23 @@ async function renderInfo() {
     topGrid.append(locationInfo, currentTempInfo, currentConditionInfo);
     currentTempInfo.append(tempDisplay, feelsLikeDisplay, highLowDisplay);
     currentConditionInfo.append(conditionIcon, conditionDesc);
-    weatherContainer.appendChild(currentDateTimeDiv);
     // Date & time
+    weatherContainer.appendChild(currentDateTimeDiv);
     currentDateTimeDiv.append(currentDate, lastUpdate);
     // Other info
     weatherContainer.appendChild(otherInfoGrid);
+    otherInfoGrid.append(riseSet, windInfo, humidityInfo, visibilityInfo, uvIndexInfo);
     // Sunrise & Sunset
-    otherInfoGrid.append(riseSet);
     riseSet.append(riseSetDate, riseSetIcon, riseSetInner);
     riseSetInner.append(riseInner, setInner);
     riseInner.append(riseInnerText, riseInnerTime);
     setInner.append(setInnerText, setInnerTime);
     // Wind info
-    otherInfoGrid.append(windInfo);
+    windInfo.append(windInfoText, windSpeedIcon, windInfoSpeed, windGust);
     // Humidity info
-    otherInfoGrid.append(humidityInfo);
+    humidityInfo.append(humidityInfoText, humidityIcon, humidity, humidityLevel);
     // Visibility info
-    otherInfoGrid.append(visibilityInfo);
+    visibilityInfo.append(visibilityInfoText, visibilityIcon, visibilityDistance, visibilityLevel);
     // UV Index
-    otherInfoGrid.append(uvIndexInfo);
+    uvIndexInfo.append(uvIndexInfoText, uvIndexIcon, uvIndexIndex, uvIndexLevel);
 }
