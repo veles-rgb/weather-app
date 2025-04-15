@@ -75,6 +75,7 @@ input[type="submit"] {
     box-shadow: 0px 0px 25px 10px rgba(0, 0, 0, 0.75);
     border-radius: 1rem;
     color: white;
+    gap: 2rem;
 }
 
 #top-grid {
@@ -125,4 +126,57 @@ input[type="submit"] {
 
 #condition-desc {
     font-weight: 900;
+}
+
+#date-time-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#current-date {
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+#other-info-grid {
+    margin: 0 auto;
+    width: fit-content;
+    height: 12rem;
+    display: grid;
+    grid-template-areas:
+        "rise-set wind humidity visibility uvindex";
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+.other-info-div {
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #7171fb;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.75);
+}
+
+#rise-set-div {
+    grid-area: rise-set;
+}
+
+#rise-set-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+}
+
+#rise-inner-text,
+#set-inner-text {
+    font-weight: 1000;
 }
