@@ -1,12 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-  <!-- Sun -->
-  <circle cx="50" cy="50" r="12" fill="orange" stroke="darkorange" stroke-width="2" />
+<svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-3.2 -3.2 38.40 38.40" xml:space="preserve" width="100px" height="100px" fill="#000000" stroke="#000000" transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)">
+  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.512"></g>
+  <g id="SVGRepo_iconCarrier">
+    <style type="text/css"> 
+      .st0{fill:none;stroke:#ffd500;stroke-width:2.08;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;} 
+      .st1{fill:none;stroke:#ff6600;stroke-width:2.08;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;} /* Orange color */
+      .st2{fill:none;stroke:#000000;stroke-width:2.08;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;} /* Black color */
+    </style> 
 
-  <!-- Sunrise Arrow (upward arrow on left side) -->
-  <line x1="25" y1="50" x2="25" y2="35" stroke="orange" stroke-width="3" />
-  <polygon points="20,35 25,30 30,35" fill="orange" />
+    <!-- Existing lines and paths -->
+    <line class="st0" x1="16" y1="3" x2="16" y2="6"></line>
+    <line class="st0" x1="6.81" y1="6.81" x2="8.93" y2="8.93"></line>
+    <line class="st0" x1="3" y1="16" x2="6" y2="16"></line>
+    <line class="st0" x1="29" y1="16" x2="26" y2="16"></line>
+    <line class="st0" x1="25.19" y1="6.81" x2="23.07" y2="8.93"></line>
+    <path class="st0" d="M22.32,19c0.43-0.91,0.68-1.92,0.68-3c0-3.87-3.13-7-7-7s-7,3.13-7,7c0,1.08,0.25,2.09,0.68,3H22.32z"></path>
+    <line class="st0" x1="3" y1="23" x2="29" y2="23"></line>
+    <line class="st0" x1="7" y1="27" x2="19" y2="27"></line>
+    <line class="st0" x1="25" y1="27" x2="23" y2="27"></line>
 
-  <!-- Sunset Arrow (downward arrow on right side) -->
-  <line x1="75" y1="50" x2="75" y2="65" stroke="orange" stroke-width="3" />
-  <polygon points="70,65 75,70 80,65" fill="orange" />
+    <!-- Orange Up arrow in the top left (matches down arrow style) -->
+    <path class="st1" d="M5,3 L7,1 L9,3" transform="translate(1, -2)"></path> 
+
+    <!-- Black Down arrow in the bottom right (matches up arrow style) -->
+    <path class="st2" d="M23,27 L25,29 L27,27" transform="translate(1, 4)"></path>
+    
+  </g>
 </svg>
