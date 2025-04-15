@@ -24,7 +24,7 @@ citySearch.addEventListener("input", (e) => {
     cityInput = e.target.value;
 });
 
-// Render all weather data to DOM
+// Render / display all weather data to DOM
 async function renderInfo() {
     // Get API weather data
     const weather = await fetchWeather(cityInput, unitSelect.value);
@@ -47,10 +47,23 @@ async function renderInfo() {
     // Clear body elements (form)
     document.body.innerHTML = "";
 
-    // Create html Elements
+    // Create weather container element
     const weatherContainer = document.createElement("div");
     weatherContainer.setAttribute("id", "weather-container");
 
+    // Append element
+    document.body.appendChild(weatherContainer);
+
+    // Load top grid
+    loadTop(weather);
+    // Load date & time
+    loadDateTime(weather);
+    // Load other info
+    loadOtherInfo(weather);
+}
+
+//  Load top grid display & information
+function loadTop(weather) {
     // Top weather information
     const topGrid = document.createElement('div');
     topGrid.setAttribute("id", "top-grid");
@@ -89,7 +102,16 @@ async function renderInfo() {
     conditionDesc.setAttribute("id", "condition-desc");
     conditionDesc.textContent = weather.currentConditions.conditions;
 
-    // Current date and time div
+    // Append Elements
+    const weatherContainer = document.getElementById("weather-container");
+    weatherContainer.appendChild(topGrid);
+    topGrid.append(locationInfo, currentTempInfo, currentConditionInfo);
+    currentTempInfo.append(tempDisplay, feelsLikeDisplay, highLowDisplay);
+    currentConditionInfo.append(conditionIcon, conditionDesc);
+}
+//  Load date & time display & information
+function loadDateTime(weather) {
+    // Current date and update time div
     const currentDateTimeDiv = document.createElement("div");
     currentDateTimeDiv.setAttribute("id", "date-time-div");
     // Current date formatted with date-fns
@@ -105,10 +127,36 @@ async function renderInfo() {
     const formattedTime = format(parsedTime, 'h:mma');
     lastUpdate.textContent = `Last updated @ ${formattedTime}`;
 
+    // Append elements
+    const weatherContainer = document.getElementById("weather-container");
+    weatherContainer.appendChild(currentDateTimeDiv);
+    currentDateTimeDiv.append(currentDate, lastUpdate);
+}
+
+// Load other weather info display & info
+function loadOtherInfo(weather) {
     // Other info grid
     const otherInfoGrid = document.createElement('div');
     otherInfoGrid.setAttribute("id", "other-info-grid");
 
+    // Append Elements 
+    const weatherContainer = document.getElementById("weather-container");
+    weatherContainer.appendChild(otherInfoGrid);
+
+    // Sunrise & Sunset
+    loadRiseSetInfo(weather);
+    // Wind info
+    loadWindInfo(weather);
+    // Humidity info
+    loadHumidityInfo(weather);
+    // Visibility info
+    loadVisibilityInfo(weather);
+    // UV Index
+    loadUvIndexInfo(weather);
+}
+
+// Load and display sunset / sunrise info to otherInfo
+function loadRiseSetInfo(weather) {
     // Sunrise / Sunset info
     const riseSet = document.createElement("div");
     riseSet.classList.add("other-info-div");
@@ -116,6 +164,8 @@ async function renderInfo() {
     // sunrise / sunset date
     const riseSetDate = document.createElement("div");
     riseSetDate.setAttribute("id", "rise-set-date");
+    const parsedDate = parseISO(weather.days[0].datetime);
+    const prettyDate = format(parsedDate, "MMMM do, yyyy");
     riseSetDate.textContent = prettyDate;
     // sunrise / sunset icon
     const riseSetIcon = document.createElement("img");
@@ -147,7 +197,17 @@ async function renderInfo() {
     const formattedSetTime = format(setTime, 'h:mma');
     setInnerTime.textContent = formattedSetTime;
 
-    // Wind info
+    // Append elements
+    const otherInfoGrid = document.getElementById("other-info-grid");
+    otherInfoGrid.appendChild(riseSet);
+    riseSet.append(riseSetDate, riseSetIcon, riseSetInner);
+    riseSetInner.append(riseInner, setInner);
+    riseInner.append(riseInnerText, riseInnerTime);
+    setInner.append(setInnerText, setInnerTime);
+}
+
+// Load and display wind info to otherInfo
+function loadWindInfo(weather) {
     const windInfo = document.createElement("div");
     windInfo.classList.add("other-info-div");
     windInfo.setAttribute("id", "wind-info");
@@ -164,7 +224,14 @@ async function renderInfo() {
     windGust.setAttribute("id", "wind-gust-info");
     windGust.textContent = `Gust: ${weather.currentConditions.windgust} ${speedUnit}`;
 
-    // Humidity info
+    // Append Elements
+    const otherInfoGrid = document.getElementById("other-info-grid");
+    otherInfoGrid.appendChild(windInfo);
+    windInfo.append(windInfoText, windSpeedIcon, windInfoSpeed, windGust);
+}
+
+// Load and display humidity info to otherInfo
+function loadHumidityInfo(weather) {
     const humidityInfo = document.createElement("div");
     humidityInfo.classList.add("other-info-div");
     humidityInfo.setAttribute("id", "humidity-info");
@@ -188,7 +255,14 @@ async function renderInfo() {
     }
     humidityLevel.textContent = humidityCategory;
 
-    // Visibility info
+    // Append Elements
+    const otherInfoGrid = document.getElementById("other-info-grid");
+    otherInfoGrid.appendChild(humidityInfo);
+    humidityInfo.append(humidityInfoText, humidityIcon, humidity, humidityLevel);
+}
+
+// Load and display visibility info to otherInfo
+function loadVisibilityInfo(weather) {
     const visibilityInfo = document.createElement("div");
     visibilityInfo.classList.add("other-info-div");
     visibilityInfo.setAttribute("id", "visibility-info");
@@ -229,7 +303,14 @@ async function renderInfo() {
     }
     visibilityLevel.textContent = visibilityCategory;
 
-    // UV Index info
+    // Append elements
+    const otherInfoGrid = document.getElementById("other-info-grid");
+    otherInfoGrid.appendChild(visibilityInfo);
+    visibilityInfo.append(visibilityInfoText, visibilityIcon, visibilityDistance, visibilityLevel);
+}
+
+// Load and display uv index info to otherInfo
+function loadUvIndexInfo(weather) {
     const uvIndexInfo = document.createElement("div");
     uvIndexInfo.classList.add("other-info-div");
     uvIndexInfo.setAttribute("id", "uvIndex-info");
@@ -259,29 +340,7 @@ async function renderInfo() {
     uvIndexLevel.textContent = uvIndexCategory;
 
     // Append elements
-    document.body.appendChild(weatherContainer);
-    // Top grid
-    weatherContainer.appendChild(topGrid);
-    topGrid.append(locationInfo, currentTempInfo, currentConditionInfo);
-    currentTempInfo.append(tempDisplay, feelsLikeDisplay, highLowDisplay);
-    currentConditionInfo.append(conditionIcon, conditionDesc);
-    // Date & time
-    weatherContainer.appendChild(currentDateTimeDiv);
-    currentDateTimeDiv.append(currentDate, lastUpdate);
-    // Other info
-    weatherContainer.appendChild(otherInfoGrid);
-    otherInfoGrid.append(riseSet, windInfo, humidityInfo, visibilityInfo, uvIndexInfo);
-    // Sunrise & Sunset
-    riseSet.append(riseSetDate, riseSetIcon, riseSetInner);
-    riseSetInner.append(riseInner, setInner);
-    riseInner.append(riseInnerText, riseInnerTime);
-    setInner.append(setInnerText, setInnerTime);
-    // Wind info
-    windInfo.append(windInfoText, windSpeedIcon, windInfoSpeed, windGust);
-    // Humidity info
-    humidityInfo.append(humidityInfoText, humidityIcon, humidity, humidityLevel);
-    // Visibility info
-    visibilityInfo.append(visibilityInfoText, visibilityIcon, visibilityDistance, visibilityLevel);
-    // UV Index
+    const otherInfoGrid = document.getElementById("other-info-grid");
+    otherInfoGrid.appendChild(uvIndexInfo);
     uvIndexInfo.append(uvIndexInfoText, uvIndexIcon, uvIndexIndex, uvIndexLevel);
 }
