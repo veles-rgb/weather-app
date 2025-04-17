@@ -68,7 +68,7 @@ input[type="submit"] {
 }
 
 #weather-container {
-    width: 50%;
+    width: 60%;
     height: 75%;
     display: flex;
     flex-direction: column;
@@ -133,7 +133,18 @@ input[type="submit"] {
     font-weight: 900;
 }
 
+#other-info-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    overflow-y: scroll;
+}
+
 #date-time-div {
+    width: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -171,6 +182,7 @@ input[type="submit"] {
     border: 2px solid #7171fb;
     border-radius: 1rem;
     box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.75);
+    padding: 1rem;
 }
 
 .other-info-icon {
@@ -250,5 +262,72 @@ input[type="submit"] {
 }
 
 #uv-index {
+    font-weight: 1000;
+}
+
+#eight-h-f-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+#eight-h-forecast-title {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.444);
+    border: 2px solid #7171fb;
+    border-radius: 1rem;
+    padding: 1rem;
+    font-size: 2rem;
+    font-weight: 900;
+    margin: 2rem;
+}
+
+#eight-h-f-title-desc {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+#eight-h-f-grid {
+    height: 6rem;
+    display: flex;
+    gap: 1rem;
+    place-items: center;
+}
+
+.hourly-div {
+    width: 6rem;
+    height: 8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.444);
+    border: 2px solid #7171fb;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.75);
+    gap: 1rem;
+}
+
+.hourly-time {
+    height: 1rem;
+    font-size: 1.2rem;
+    font-weight: 1000;
+}
+
+.hourly-icon {
+    height: 2rem;
+}
+
+.hourly-temp {
+    height: 1rem;
+    font-size: 1.2rem;
     font-weight: 1000;
 }
