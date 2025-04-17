@@ -1,6 +1,6 @@
 // display.js
 import { parse, parseISO, format } from 'https://cdn.skypack.dev/date-fns';
-import { fetchWeather } from "./getWeather.js";
+import { fetchWeather, fetchHourlyWeather } from "./getWeather.js";
 const searchForm = document.querySelector("form");
 const citySearch = document.querySelector("input[type='search']");
 const unitSelect = document.querySelector("select");
@@ -56,6 +56,8 @@ async function renderInfo() {
 
     // Load top grid
     loadTop(weather);
+    // Load other info container
+    loadOtherInfoContainer();
     // Load date & time
     loadDateTime(weather);
     // Load other info
@@ -109,6 +111,15 @@ function loadTop(weather) {
     currentTempInfo.append(tempDisplay, feelsLikeDisplay, highLowDisplay);
     currentConditionInfo.append(conditionIcon, conditionDesc);
 }
+
+// Load other info container
+function loadOtherInfoContainer() {
+    const weatherContainer = document.getElementById("weather-container");
+    const otherInfoContainer = document.createElement("div");
+    otherInfoContainer.setAttribute("id", "other-info-container");
+    weatherContainer.appendChild(otherInfoContainer);
+}
+
 //  Load date & time display & information
 function loadDateTime(weather) {
     // Current date and update time div
@@ -128,8 +139,8 @@ function loadDateTime(weather) {
     lastUpdate.textContent = `Last updated @ ${formattedTime}`;
 
     // Append elements
-    const weatherContainer = document.getElementById("weather-container");
-    weatherContainer.appendChild(currentDateTimeDiv);
+    const otherInfoContainer = document.getElementById("other-info-container");
+    otherInfoContainer.appendChild(currentDateTimeDiv);
     currentDateTimeDiv.append(currentDate, lastUpdate);
 }
 
@@ -139,9 +150,9 @@ function loadOtherInfo(weather) {
     const otherInfoGrid = document.createElement('div');
     otherInfoGrid.setAttribute("id", "other-info-grid");
 
-    // Append Elements 
-    const weatherContainer = document.getElementById("weather-container");
-    weatherContainer.appendChild(otherInfoGrid);
+    // Append elements
+    const otherInfoContainer = document.getElementById("other-info-container");
+    otherInfoContainer.appendChild(otherInfoGrid);
 
     // Sunrise & Sunset
     loadRiseSetInfo(weather);
@@ -153,6 +164,14 @@ function loadOtherInfo(weather) {
     loadVisibilityInfo(weather);
     // UV Index
     loadUvIndexInfo(weather);
+    // 8 hour forecast container
+    load8HFContainer();
+    // 8 hour forecast title
+    load8HourForecastTitle();
+    // 8 hour forecast grid
+    load8HFGrid();
+    // 8 hour forecast divs
+    load8HForecast(weather);
 }
 
 // Load and display sunset / sunrise info to otherInfo
@@ -343,4 +362,82 @@ function loadUvIndexInfo(weather) {
     const otherInfoGrid = document.getElementById("other-info-grid");
     otherInfoGrid.appendChild(uvIndexInfo);
     uvIndexInfo.append(uvIndexInfoText, uvIndexIcon, uvIndexIndex, uvIndexLevel);
+}
+
+function load8HFContainer() {
+    const eightHFContainer = document.createElement('div');
+    eightHFContainer.setAttribute("id", "eight-h-f-container");
+
+    const otherInfoContainer = document.getElementById("other-info-container");
+    otherInfoContainer.appendChild(eightHFContainer);
+}
+
+// Display 8 hour forecast TITLE
+function load8HourForecastTitle() {
+    const eightHourForecastTitle = document.createElement("div");
+    eightHourForecastTitle.setAttribute("id", "eight-h-forecast-title");
+    eightHourForecastTitle.textContent = "Hourly Forecast";
+    const eightHFTitleDesc = document.createElement("div");
+    eightHFTitleDesc.setAttribute("id", "eight-h-f-title-desc");
+    eightHFTitleDesc.textContent = "The next 8 hours";
+
+    // Append elements
+    const eightHFContainer = document.getElementById("eight-h-f-container");
+    eightHFContainer.appendChild(eightHourForecastTitle);
+    eightHourForecastTitle.appendChild(eightHFTitleDesc);
+}
+
+// Display 8 hour forecast grid
+function load8HFGrid() {
+    const eightHFGrid = document.createElement("div");
+    eightHFGrid.setAttribute("id", "eight-h-f-grid");
+
+    const eightHFContainer = document.getElementById("eight-h-f-container");
+    eightHFContainer.appendChild(eightHFGrid);
+}
+
+// load 8 hour forecast divs
+async function load8HForecast(weather) {
+    // Fetch API hourly weather data
+    const hourlyWeather = await fetchHourlyWeather(cityInput, unitSelect.value);
+
+    const eightHFGrid = document.getElementById("eight-h-f-grid");
+    const currentTime = weather.currentConditions.datetime.substring(0, 2);
+    const hours = hourlyWeather.days[0].hours;
+
+    // Find the current hour in hourly weather array
+    const currentIndex = hours.findIndex(hour => {
+        return hour.datetime.substring(0, 2) === currentTime;
+    });
+
+    // Create a div for the next 8 hours or as many hours that are left in the day
+    if (currentIndex !== -1) {
+        const nextHours = hours.slice(currentIndex + 1, currentIndex + 9);
+        const eightHFContainer = document.getElementById("eight-h-f-container");
+        if (nextHours.length === 0) {
+            eightHFContainer.remove(); // No next hours to show
+        } else {
+            nextHours.forEach(hour => {
+                const parseTime = parse(hour.datetime, 'HH:mm:ss', new Date());
+                const formattedTime = format(parseTime, 'h:mma');
+                const hourlyDiv = document.createElement("div");
+                hourlyDiv.classList.add("hourly-div");
+                // Display times
+                const hourlyTime = document.createElement("div");
+                hourlyTime.classList.add("hourly-time");
+                hourlyTime.textContent = formattedTime;
+                // Display icon
+                const hourlyIcon = document.createElement("img");
+                hourlyIcon.classList.add("hourly-icon");
+                hourlyIcon.src = `/assets/icons/${hour.icon}.svg`;
+                // Display temp
+                const hourlyTemp = document.createElement("hourly-temp");
+                hourlyTemp.classList.add("hourly-temp");
+                hourlyTemp.textContent = hour.temp + tempUnit;
+                // Append elements
+                eightHFGrid.appendChild(hourlyDiv);
+                hourlyDiv.append(hourlyTime, hourlyIcon, hourlyTemp);
+            });
+        }
+    }
 }
