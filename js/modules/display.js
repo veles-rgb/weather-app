@@ -172,6 +172,12 @@ function loadOtherInfo(weather) {
     load8HFGrid();
     // 8 hour forecast divs
     load8HForecast(weather);
+    // Daily forecast container
+    loadDailyContainer();
+    // Daily forecast title
+    loadDailyTitle();
+    // Daily forecast 
+    loadDailyForecast(weather);
 }
 
 // Load and display sunset / sunrise info to otherInfo
@@ -364,6 +370,7 @@ function loadUvIndexInfo(weather) {
     uvIndexInfo.append(uvIndexInfoText, uvIndexIcon, uvIndexIndex, uvIndexLevel);
 }
 
+// Create & load container for 8 hour forecast display
 function load8HFContainer() {
     const eightHFContainer = document.createElement('div');
     eightHFContainer.setAttribute("id", "eight-h-f-container");
@@ -420,6 +427,7 @@ async function load8HForecast(weather) {
             nextHours.forEach(hour => {
                 const parseTime = parse(hour.datetime, 'HH:mm:ss', new Date());
                 const formattedTime = format(parseTime, 'h:mma');
+                // Create hourly div
                 const hourlyDiv = document.createElement("div");
                 hourlyDiv.classList.add("hourly-div");
                 // Display times
@@ -441,3 +449,80 @@ async function load8HForecast(weather) {
         }
     }
 }
+
+// Create and display daily forecast container
+function loadDailyContainer() {
+    const dailyContainer = document.createElement("div");
+    dailyContainer.setAttribute("id", "daily-container");
+
+    // Append elements
+    const otherInfoContainer = document.getElementById("other-info-container");
+    otherInfoContainer.appendChild(dailyContainer);
+}
+
+// Create and display daily forecast section title
+function loadDailyTitle() {
+    const dailyTitle = document.createElement("div");
+    dailyTitle.setAttribute("id", "daily-title");
+    dailyTitle.textContent = "Daily Forecast";
+    const dailyTitleInfo = document.createElement("div");
+    dailyTitleInfo.setAttribute("id", "daily-title-info");
+    dailyTitleInfo.textContent = "The next 7 days";
+
+    const dailyContainer = document.getElementById("daily-container");
+    dailyContainer.appendChild(dailyTitle);
+    dailyTitle.appendChild(dailyTitleInfo);
+}
+
+// Create and display daily forecast
+async function loadDailyForecast(weather) {
+    const dailyGrid = document.createElement("div");
+    dailyGrid.setAttribute("id", "daily-grid");
+
+    // Append element
+    const dailyContainer = document.getElementById("daily-container");
+    dailyContainer.appendChild(dailyGrid);
+
+    // Get the next 7 days
+    const days = await weather.days;
+    const next7Days = days.slice(1, 8);
+    next7Days.forEach(day => {
+        // Create daily forecast div
+        const dailyDiv = document.createElement("div");
+        dailyDiv.classList.add("daily-div");
+        // Create date display
+        const parsedDate = parseISO(day.datetime);
+        const prettyDate = format(parsedDate, "MMM do");
+        const dailyDate = document.createElement("div");
+        dailyDate.classList.add("daily-date");
+        dailyDate.textContent = prettyDate;
+        // Create icon display
+        const dailyIcon = document.createElement("img");
+        dailyIcon.classList.add("daily-icon");
+        dailyIcon.src = `/assets/icons/${day.icon}.svg`;
+        // Create hi lo div
+        const dailyHiLo = document.createElement("div");
+        dailyHiLo.classList.add("daily-hi-lo");
+        // Create hi div
+        const dailyHi = document.createElement("div");
+        dailyHi.classList.add("daily-hi");
+        dailyHi.textContent = "Hi";
+        const hiTemp = document.createElement("div");
+        hiTemp.classList.add("hi-temp");
+        hiTemp.textContent = day.tempmax + tempUnit;
+        // Create lo div
+        const dailyLo = document.createElement("div");
+        dailyLo.classList.add("daily-lo");
+        dailyLo.textContent = "Lo";
+        const loTemp = document.createElement("div");
+        loTemp.classList.add("lo-temp");
+        loTemp.textContent = day.tempmin + tempUnit;
+
+        // Append elements
+        dailyGrid.appendChild(dailyDiv);
+        dailyDiv.append(dailyDate, dailyIcon, dailyHiLo);
+        dailyHiLo.append(dailyHi, dailyLo);
+        dailyHi.appendChild(hiTemp);
+        dailyLo.appendChild(loTemp);
+    });
+};
