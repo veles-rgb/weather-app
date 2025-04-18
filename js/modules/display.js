@@ -58,6 +58,8 @@ async function renderInfo() {
     loadTop(weather);
     // Load other info container
     loadOtherInfoContainer();
+    // Load current weather info div
+    loadCurrentWeatherDiv();
     // Load date & time
     loadDateTime(weather);
     // Load other info
@@ -120,6 +122,15 @@ function loadOtherInfoContainer() {
     weatherContainer.appendChild(otherInfoContainer);
 }
 
+// Load current weather info
+function loadCurrentWeatherDiv() {
+    const currentWeatherDiv = document.createElement("div");
+    currentWeatherDiv.setAttribute("id", "current-weather-div");
+
+    const otherInfoContainer = document.getElementById("other-info-container");
+    otherInfoContainer.appendChild(currentWeatherDiv);
+}
+
 //  Load date & time display & information
 function loadDateTime(weather) {
     // Current date and update time div
@@ -139,8 +150,8 @@ function loadDateTime(weather) {
     lastUpdate.textContent = `Last updated @ ${formattedTime}`;
 
     // Append elements
-    const otherInfoContainer = document.getElementById("other-info-container");
-    otherInfoContainer.appendChild(currentDateTimeDiv);
+    const currentWeatherDiv = document.getElementById("current-weather-div");
+    currentWeatherDiv.appendChild(currentDateTimeDiv);
     currentDateTimeDiv.append(currentDate, lastUpdate);
 }
 
@@ -151,8 +162,8 @@ function loadOtherInfo(weather) {
     otherInfoGrid.setAttribute("id", "other-info-grid");
 
     // Append elements
-    const otherInfoContainer = document.getElementById("other-info-container");
-    otherInfoContainer.appendChild(otherInfoGrid);
+    const currentWeatherDiv = document.getElementById("current-weather-div");
+    currentWeatherDiv.appendChild(otherInfoGrid);
 
     // Sunrise & Sunset
     loadRiseSetInfo(weather);
