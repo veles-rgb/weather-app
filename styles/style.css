@@ -296,7 +296,7 @@ input[type="submit"] {
 }
 
 #eight-h-f-grid {
-    height: 6rem;
+    height: 8rem;
     display: flex;
     gap: 1rem;
     place-items: center;
@@ -329,5 +329,83 @@ input[type="submit"] {
 .hourly-temp {
     height: 1rem;
     font-size: 1.2rem;
+    font-weight: 1000;
+}
+
+#daily-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+#daily-title {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.444);
+    border: 2px solid #7171fb;
+    border-radius: 1rem;
+    padding: 1rem;
+    font-size: 2rem;
+    font-weight: 900;
+    margin: 2rem;
+}
+
+#daily-title-info {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+#daily-grid {
+    height: 10rem;
+    display: flex;
+    gap: 1rem;
+    place-items: center;
+}
+
+.daily-div {
+    width: 8rem;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.444);
+    border: 2px solid #7171fb;
+    border-radius: 1rem;
+    box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.75);
+    gap: 1rem;
+}
+
+.daily-date {
+    height: 1rem;
+    font-size: 1.2rem;
+    font-weight: 1000;
+}
+
+.daily-icon {
+    height: 2rem;
+}
+
+.daily-hi-lo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.daily-hi,
+.daily-lo {
+    text-align: center;
+}
+
+.hi-temp,
+.lo-temp {
     font-weight: 1000;
 }
