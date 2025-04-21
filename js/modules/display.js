@@ -1,7 +1,7 @@
 // display.js
 import { parse, parseISO, format } from 'https://cdn.skypack.dev/date-fns';
 import { fetchWeather, fetchHourlyWeather } from "./getWeather.js";
-import { partlyCloudyDay } from "./background.js";
+import { partlyCloudy } from "./background.js";
 const searchForm = document.querySelector("form");
 const citySearch = document.querySelector("#city");
 const unitSelect = document.querySelector("select");
@@ -81,11 +81,11 @@ async function renderInfo() {
 function loadBackground(weather) {
     if (weather.currentConditions.icon === "partly-cloudy-day") {
         for (let i = 0; i < 5; i++) {
-            setTimeout(partlyCloudyDay, i * 1000);
+            setTimeout(partlyCloudy, i * 1000);
         }
     } else if (weather.currentConditions.icon === "partly-cloudy-night") {
         for (let i = 0; i < 5; i++) {
-            setTimeout(partlyCloudyDay, i * 1000);
+            setTimeout(partlyCloudy, i * 1000);
         }
         document.body.style.backgroundColor = "black";
     }

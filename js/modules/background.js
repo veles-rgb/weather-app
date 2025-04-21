@@ -1,4 +1,4 @@
-function createCloud() {
+function partlyCloudy() {
     const sky = document.getElementById('sky');
     const cloudImages = [
         'https://pngimg.com/d/cloud_PNG112234.png',
@@ -30,9 +30,9 @@ function createCloud() {
     cloud.addEventListener('animationend', () => {
         sky.removeChild(cloud);
         // Recursively spawn next one after short random delay
-        setTimeout(createCloud, Math.random() * 3000); // 0–3 sec gap
+        setTimeout(partlyCloudy, Math.random() * 3000); // 0–3 sec gap
     });
 }
 
 // Exports
-export { createCloud };
+export { partlyCloudy };
