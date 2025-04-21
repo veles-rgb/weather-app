@@ -80,7 +80,6 @@ async function renderInfo() {
 // Load background images
 function loadBackground(weather) {
     if (weather.currentConditions.icon === "partly-cloudy-day") {
-        // Kick off a few clouds instantly
         for (let i = 0; i < 5; i++) {
             setTimeout(partlyCloudyDay, i * 1000);
         }
