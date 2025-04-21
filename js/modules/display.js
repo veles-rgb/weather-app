@@ -2,7 +2,7 @@
 import { parse, parseISO, format } from 'https://cdn.skypack.dev/date-fns';
 import { fetchWeather, fetchHourlyWeather } from "./getWeather.js";
 const searchForm = document.querySelector("form");
-const citySearch = document.querySelector("input[type='search']");
+const citySearch = document.querySelector("#city");
 const unitSelect = document.querySelector("select");
 let cityInput = null;
 let tempUnit = null;
@@ -51,9 +51,12 @@ async function renderInfo() {
     const weatherContainer = document.createElement("div");
     weatherContainer.setAttribute("id", "weather-container");
 
-    // Append element
+    // Append elements
+    loadSearchContainer();
+    renderSearch();
+    renderSearchBtn();
+    renderUnitSelect();
     document.body.appendChild(weatherContainer);
-
     // Load top grid
     loadTop(weather);
     // Load other info container
@@ -64,6 +67,83 @@ async function renderInfo() {
     loadDateTime(weather);
     // Load other info
     loadOtherInfo(weather);
+}
+
+// Create city search container
+function loadSearchContainer() {
+    const searchContainer = document.createElement("div");
+    searchContainer.setAttribute("id", "search-container");
+
+    document.body.appendChild(searchContainer);
+}
+
+// Create city search bar
+function renderSearch() {
+    const searchBar = document.createElement("input");
+    searchBar.setAttribute("type", "search");
+    searchBar.setAttribute("id", "search-bar");
+    searchBar.name = "search-bar";
+    searchBar.placeholder = cityInput;
+
+    // Create event listener for new search bar
+    searchBar.addEventListener("input", (e) => {
+        cityInput = e.target.value;
+    });
+
+    // Append elements
+    const searchContainer = document.getElementById("search-container");
+    searchContainer.append(searchBar);
+}
+
+// Create unit selection
+function renderUnitSelect() {
+    const select = document.createElement("select");
+    select.name = "newUnits";
+    select.setAttribute("id", "newUnits");
+
+    const placeHolder = document.createElement("option");
+    placeHolder.setAttribute("id", "placeholder-option");
+    placeHolder.disabled = true;
+    placeHolder.selected = true;
+    placeHolder.hidden = true;
+    placeHolder.text = `${tempUnit}, ${distanceUnit}`;
+
+    const metric = document.createElement("option");
+    metric.value = "metric";
+    metric.text = "°C, km";
+
+    const us = document.createElement("option");
+    us.value = "us";
+    us.text = "°F, miles";
+
+    const uk = document.createElement("option");
+    uk.value = "uk";
+    uk.text = "°C, miles";
+
+    select.addEventListener("change", (e) => {
+        unitSelect.value = select.value;
+        renderInfo();
+    });
+
+    // Append elements
+    const searchContainer = document.getElementById("search-container");
+    searchContainer.appendChild(select);
+    select.append(placeHolder, metric, us, uk);
+}
+
+// Create search button
+function renderSearchBtn() {
+    const searchBtn = document.createElement("button");
+    searchBtn.setAttribute("id", "search-btn");
+    searchBtn.textContent = "Search";
+
+    searchBtn.addEventListener("click", (e) => {
+        renderInfo();
+    });
+
+    // Append elements
+    const searchContainer = document.getElementById("search-container");
+    searchContainer.append(searchBtn);
 }
 
 //  Load top grid display & information
