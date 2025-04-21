@@ -51,6 +51,7 @@ async function renderInfo() {
     // Create sky div
     const sky = document.createElement("div");
     sky.setAttribute("id", "sky");
+    sky.innerHTML = "";
 
     // Create weather container element
     const weatherContainer = document.createElement("div");
@@ -58,6 +59,7 @@ async function renderInfo() {
 
     // Append elements
     document.body.appendChild(sky);
+    loadBackground(weather);
     loadSearchContainer();
     renderSearch();
     renderSearchBtn();
@@ -73,6 +75,16 @@ async function renderInfo() {
     loadDateTime(weather);
     // Load other info
     loadOtherInfo(weather);
+}
+
+// Load background images
+function loadBackground(weather) {
+    if (weather.currentConditions.icon === "partly-cloudy-day") {
+        // Kick off a few clouds instantly
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createCloud, i * 1000);
+        }
+    } else return;
 }
 
 // Create city search container
@@ -191,12 +203,6 @@ function loadTop(weather) {
     const conditionDesc = document.createElement("div");
     conditionDesc.setAttribute("id", "condition-desc");
     conditionDesc.textContent = weather.currentConditions.conditions;
-    if (weather.currentConditions.icon = "partly-cloudy-day") {
-        // Kick off a few clouds instantly
-        for (let i = 0; i < 5; i++) {
-            setTimeout(createCloud, i * 1000);
-        }
-    }
 
     // Append Elements
     const weatherContainer = document.getElementById("weather-container");
