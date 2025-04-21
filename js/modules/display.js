@@ -1,7 +1,7 @@
 // display.js
 import { parse, parseISO, format } from 'https://cdn.skypack.dev/date-fns';
 import { fetchWeather, fetchHourlyWeather } from "./getWeather.js";
-import { createCloud } from "./background.js";
+import { partlyCloudyDay } from "./background.js";
 const searchForm = document.querySelector("form");
 const citySearch = document.querySelector("#city");
 const unitSelect = document.querySelector("select");
@@ -82,9 +82,14 @@ function loadBackground(weather) {
     if (weather.currentConditions.icon === "partly-cloudy-day") {
         // Kick off a few clouds instantly
         for (let i = 0; i < 5; i++) {
-            setTimeout(createCloud, i * 1000);
+            setTimeout(partlyCloudyDay, i * 1000);
         }
-    } else return;
+    } else if (weather.currentConditions.icon === "partly-cloudy-night") {
+        for (let i = 0; i < 5; i++) {
+            setTimeout(partlyCloudyDay, i * 1000);
+        }
+        document.body.style.backgroundColor = "black";
+    }
 }
 
 // Create city search container
