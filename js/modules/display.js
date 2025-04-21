@@ -1,6 +1,7 @@
 // display.js
 import { parse, parseISO, format } from 'https://cdn.skypack.dev/date-fns';
 import { fetchWeather, fetchHourlyWeather } from "./getWeather.js";
+import { createCloud } from "./background.js";
 const searchForm = document.querySelector("form");
 const citySearch = document.querySelector("#city");
 const unitSelect = document.querySelector("select");
@@ -47,11 +48,16 @@ async function renderInfo() {
     // Clear body elements (form)
     document.body.innerHTML = "";
 
+    // Create sky div
+    const sky = document.createElement("div");
+    sky.setAttribute("id", "sky");
+
     // Create weather container element
     const weatherContainer = document.createElement("div");
     weatherContainer.setAttribute("id", "weather-container");
 
     // Append elements
+    document.body.appendChild(sky);
     loadSearchContainer();
     renderSearch();
     renderSearchBtn();
@@ -185,6 +191,12 @@ function loadTop(weather) {
     const conditionDesc = document.createElement("div");
     conditionDesc.setAttribute("id", "condition-desc");
     conditionDesc.textContent = weather.currentConditions.conditions;
+    if (weather.currentConditions.icon = "partly-cloudy-day") {
+        // Kick off a few clouds instantly
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createCloud, i * 1000);
+        }
+    }
 
     // Append Elements
     const weatherContainer = document.getElementById("weather-container");
