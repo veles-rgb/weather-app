@@ -34,5 +34,55 @@ function partlyCloudy() {
     });
 }
 
+function clearDay() {
+    const clearSun = document.createElement("div");
+    clearSun.classList.add("sun");
+
+    const sky = document.getElementById('sky');
+    sky.appendChild(clearSun);
+}
+
+function clearNight() {
+    const clearMoon = document.createElement("div");
+    clearMoon.classList.add("moon");
+
+    const sky = document.getElementById('sky');
+    sky.appendChild(clearMoon);
+}
+
+function cloudy(count = 12) {
+    const sky = document.getElementById('sky');
+    const cloudImages = [
+        'https://pngimg.com/d/cloud_PNG112234.png',
+        'https://www.freeiconspng.com/thumbs/rain-png/rain-clouds-png-27.png'
+    ];
+
+    const total = count + 2; // 1 extra cloud before and after
+
+    for (let i = -1; i <= count; i++) {
+        const cloud = document.createElement('div');
+        cloud.classList.add('cloudy-cloud');
+
+        const img = cloudImages[Math.floor(Math.random() * cloudImages.length)];
+        cloud.style.backgroundImage = `url('${img}')`;
+
+        const width = Math.random() * 200 + 600;
+        cloud.style.width = `${width}px`;
+        cloud.style.height = `${width * 0.6}px`;
+
+        const spacing = 100 / (count - 1);
+        const leftPercent = spacing * i;
+        const wiggle = Math.random() * 1.5 - 0.75;
+
+        cloud.style.left = `calc(${leftPercent}% + ${wiggle}vw)`;
+        cloud.style.top = `${Math.random() * 40 - 150}px`; // between -60px and -20px
+
+        const delay = Math.random() * 3;
+        cloud.style.animationDelay = `0s, ${delay}s`;
+
+        sky.appendChild(cloud);
+    }
+}
+
 // Exports
-export { partlyCloudy };
+export { partlyCloudy, clearDay, clearNight, cloudy };

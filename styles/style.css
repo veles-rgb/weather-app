@@ -478,15 +478,16 @@ input[type="submit"] {
 /* BACKGROUND STYLES */
 #sky {
     width: 100%;
+    box-sizing: border-box;
     position: absolute;
     top: 0;
     left: 0;
     height: 200px;
-    width: 100vw;
     pointer-events: none;
     z-index: 1;
 }
 
+/* Partly Cloudy */
 .cloud {
     position: absolute;
     background-size: contain;
@@ -503,5 +504,144 @@ input[type="submit"] {
 
     100% {
         transform: translateX(110vw);
+    }
+}
+
+/* Clear Day */
+.sun {
+    position: absolute;
+    top: 100vh;
+    /* Start offscreen */
+    right: 60px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle at center, #fffbe6, #ffd700 60%, transparent 80%);
+    border-radius: 50%;
+    box-shadow: 0 0 30px 15px rgba(255, 223, 0, 0.5);
+    animation:
+        sunRise 10s ease-out forwards,
+        sunRotate 30s linear infinite,
+        sunPulse 4s ease-in-out infinite;
+    z-index: 2;
+}
+
+@keyframes sunRise {
+    0% {
+        top: 100vh;
+    }
+
+    100% {
+        top: 40px;
+    }
+}
+
+@keyframes sunRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes sunPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 30px 15px rgba(255, 223, 0, 0.5);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 40px 20px rgba(255, 223, 0, 0.7);
+    }
+}
+
+/* Clear Night */
+.moon {
+    position: absolute;
+    top: 100vh;
+    /* Start offscreen */
+    right: 60px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle at center, #e0e0ff, #aabbee 60%, transparent 80%);
+    border-radius: 50%;
+    box-shadow: 0 0 25px 10px rgba(180, 200, 255, 0.3);
+    animation:
+        moonRise 12s ease-out forwards,
+        moonRotate 40s linear infinite,
+        moonPulse 6s ease-in-out infinite;
+    z-index: 2;
+}
+
+@keyframes moonRise {
+    0% {
+        top: 100vh;
+    }
+
+    100% {
+        top: 50px;
+    }
+}
+
+@keyframes moonRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes moonPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 25px 10px rgba(180, 200, 255, 0.3);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 35px 15px rgba(200, 220, 255, 0.5);
+    }
+}
+
+/* Cloudy */
+.cloudy-cloud {
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    animation:
+        fadeIn 2s ease-out forwards,
+        hoverPulse 4s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.95;
+    }
+}
+
+@keyframes hoverPulse {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(6px);
     }
 }
