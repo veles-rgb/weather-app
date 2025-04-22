@@ -495,6 +495,7 @@ input[type="submit"] {
     background-position: center;
     opacity: 0.9;
     animation: float linear forwards;
+    z-index: 3;
 }
 
 @keyframes float {
@@ -513,8 +514,8 @@ input[type="submit"] {
     top: 100vh;
     /* Start offscreen */
     right: 60px;
-    width: 200px;
-    height: 200px;
+    width: 175px;
+    height: 175px;
     background: radial-gradient(circle at center, #fffbe6, #ffd700 60%, transparent 80%);
     border-radius: 50%;
     box-shadow: 0 0 30px 15px rgba(255, 223, 0, 0.5);
@@ -555,7 +556,7 @@ input[type="submit"] {
 
     50% {
         transform: scale(1.05);
-        box-shadow: 0 0 40px 20px rgba(255, 223, 0, 0.7);
+        box-shadow: 0 0 35px 20px rgba(255, 223, 0, 0.6);
     }
 }
 
@@ -622,6 +623,7 @@ input[type="submit"] {
         fadeIn 2s ease-out forwards,
         hoverPulse 4s ease-in-out infinite;
     will-change: transform, opacity;
+    z-index: 3;
 }
 
 @keyframes fadeIn {
@@ -643,5 +645,33 @@ input[type="submit"] {
 
     50% {
         transform: translateY(6px);
+    }
+}
+
+/* Thunder / Lightning */
+.lightning {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 2;
+    animation: flash 0.3s ease-out;
+}
+
+@keyframes flash {
+    0% {
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.8;
+    }
+
+    100% {
+        opacity: 0;
     }
 }
