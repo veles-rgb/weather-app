@@ -96,8 +96,13 @@ function loadBackground(weather) {
         clearNight();
         document.body.style.backgroundColor = "black";
     } else if (weather.currentConditions.icon === "cloudy") {
-        cloudy();
-        document.body.style.backgroundColor = "#000000ad";
+        if (weather.currentConditions.datetime.substring(0, 2) >= weather.currentConditions.sunset.substring(0, 2)) {
+            cloudy();
+            document.body.style.backgroundColor = "black";
+        } else {
+            cloudy();
+            document.body.style.backgroundColor = "#000000ad";
+        }
     }
 }
 
