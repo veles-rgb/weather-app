@@ -1,7 +1,7 @@
 // display.js
 import { parse, parseISO, format } from 'https://cdn.skypack.dev/date-fns';
 import { fetchWeather, fetchHourlyWeather } from "./getWeather.js";
-import { partlyCloudy, clearDay, clearNight, cloudy, thunder } from "./background.js";
+import { partlyCloudy, sun, moon, cloudy, thunder, rain, snow, hail, fog, wind } from "./background.js";
 const searchForm = document.querySelector("form");
 const citySearch = document.querySelector("#city");
 const unitSelect = document.querySelector("select");
@@ -51,7 +51,6 @@ async function renderInfo() {
     // Create sky div
     const sky = document.createElement("div");
     sky.setAttribute("id", "sky");
-    sky.innerHTML = "";
 
     // Create weather container element
     const weatherContainer = document.createElement("div");
@@ -77,41 +76,93 @@ async function renderInfo() {
     loadOtherInfo(weather);
 }
 
-// Load background images
+// Load background animations
 function loadBackground(weather) {
+    const styles = getComputedStyle(document.documentElement);
+    const bgDay = styles.getPropertyValue('--bg-day').trim();
+    const bgDark = styles.getPropertyValue('--bg-dark').trim();
+    const bgNight = styles.getPropertyValue('--bg-night').trim();
+
+    sky.innerHTML = "";
     if (weather.currentConditions.icon === "partly-cloudy-day") {
         for (let i = 0; i < 5; i++) {
-            clearDay();
+            sun();
             setTimeout(partlyCloudy, i * 1000);
         }
-        document.body.style.backgroundColor = "#7171fb";
+        document.body.style.background = bgDay;
     } else if (weather.currentConditions.icon === "partly-cloudy-night") {
         for (let i = 0; i < 5; i++) {
-            clearNight();
+            moon();
             setTimeout(partlyCloudy, i * 1000);
         }
-        document.body.style.backgroundColor = "black";
+        document.body.style.background = bgNight;
     } else if (weather.currentConditions.icon === "clear-day") {
-        clearDay();
-        document.body.style.backgroundColor = "#7171fb";
+        sun();
+        document.body.style.background = bgDay;
     } else if (weather.currentConditions.icon === "clear-night") {
-        clearNight();
-        document.body.style.backgroundColor = "black";
+        moon();
+        document.body.style.background = bgNight;
     } else if (weather.currentConditions.icon === "cloudy") {
         if (weather.currentConditions.datetime.substring(0, 2) >= weather.currentConditions.sunset.substring(0, 2)) {
             cloudy();
-            document.body.style.backgroundColor = "black";
+            document.body.style.background = bgNight;
         } else {
             cloudy();
-            document.body.style.backgroundColor = "#000000ad";
+            document.body.style.background = bgDark;
         }
     } else if (weather.currentConditions.icon === "thunder") {
         if (weather.currentConditions.datetime.substring(0, 2) >= weather.currentConditions.sunset.substring(0, 2)) {
             thunder();
-            document.body.style.backgroundColor = "black";
+            document.body.style.background = bgNight;
         } else {
             thunder();
-            document.body.style.backgroundColor = "#000000ad";
+            document.body.style.background = bgDark;
+        }
+    } else if (weather.currentConditions.icon === "rain") {
+        if (weather.currentConditions.datetime.substring(0, 2) >= weather.currentConditions.sunset.substring(0, 2)) {
+            cloudy();
+            rain(15);
+            document.body.style.background = bgNight;
+        } else {
+            cloudy();
+            rain(15);
+            document.body.style.background = bgDark;
+        }
+    } else if (weather.currentConditions.icon === "snow") {
+        if (weather.currentConditions.datetime.substring(0, 2) >= weather.currentConditions.sunset.substring(0, 2)) {
+            cloudy();
+            snow(5);
+            document.body.style.background = bgNight;
+        } else {
+            cloudy();
+            snow(5);
+            document.body.style.background = bgDark;
+        }
+    } else if (weather.currentConditions.icon === "hail") {
+        if (weather.currentConditions.datetime.substring(0, 2) >= weather.currentConditions.sunset.substring(0, 2)) {
+            cloudy();
+            hail(5);
+            document.body.style.background = bgNight;
+        } else {
+            cloudy();
+            hail(5);
+            document.body.style.background = bgDark;
+        }
+    } else if (weather.currentConditions.icon === "fog") {
+        if (weather.currentConditions.datetime.substring(0, 2) >= weather.currentConditions.sunset.substring(0, 2)) {
+            fog(4);
+            document.body.style.background = bgNight;
+        } else {
+            fog(4);
+            document.body.style.background = bgDark;
+        }
+    } else if (weather.currentConditions.icon === "wind") {
+        if (weather.currentConditions.datetime.substring(0, 2) >= weather.currentConditions.sunset.substring(0, 2)) {
+            wind(1);
+            document.body.style.background = bgNight;
+        } else {
+            wind(1);
+            document.body.style.background = bgDay;
         }
     }
 }
