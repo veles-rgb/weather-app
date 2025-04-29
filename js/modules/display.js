@@ -10,6 +10,15 @@ let tempUnit = null;
 let speedUnit = null;
 let distanceUnit = null;
 
+// Check for error in storage
+document.addEventListener("DOMContentLoaded", function () {
+    const storedError = sessionStorage.getItem('error');
+    if (storedError) {
+        const errorMessage = JSON.parse(storedError);
+        displayError(errorMessage);
+        sessionStorage.removeItem('error');
+    }
+});
 
 // Listen for form submit
 searchForm.addEventListener("submit", (e) => {
@@ -19,6 +28,37 @@ searchForm.addEventListener("submit", (e) => {
     }
     renderInfo();
 });
+
+// Create loading indicator
+function loading() {
+    document.body.innerHTML = "";
+    const loadingDiv = document.createElement("div");
+    loadingDiv.setAttribute("id", "loading");
+    loadingDiv.textContent = "Loading";
+
+    const loadingContent = document.createElement("div");
+    loadingContent.setAttribute("id", "loading-content");
+
+    const dot1 = document.createElement("div");
+    dot1.classList.add("dot");
+    const dot2 = document.createElement("div");
+    dot2.classList.add("dot");
+    const dot3 = document.createElement("div");
+    dot3.classList.add("dot");
+
+    document.body.appendChild(loadingDiv);
+    loadingDiv.appendChild(loadingContent);
+    loadingContent.append(dot1, dot2, dot3);
+}
+
+// Display error message
+function displayError(error) {
+    const errorDiv = document.createElement("div");
+    errorDiv.classList.add("error");
+    errorDiv.textContent = error;
+
+    document.body.appendChild(errorDiv);
+}
 
 // Listen for input change in citySearch box
 citySearch.addEventListener("input", (e) => {
@@ -624,3 +664,5 @@ async function loadDailyForecast(weather) {
         dailyLo.appendChild(loTemp);
     });
 };
+
+export { loading, displayError };
