@@ -1,8 +1,10 @@
+// background.js
+// This module handles the background weather effects for the website.
 function partlyCloudy() {
     const sky = document.getElementById('sky');
     const cloudImages = [
-        'https://pngimg.com/d/cloud_PNG112234.png',
-        'https://www.freeiconspng.com/thumbs/rain-png/rain-clouds-png-27.png'
+        '/assets/imgs/cloud1.png',
+        '/assets/imgs/cloud2.png'
     ];
 
     const cloud = document.createElement('div');
@@ -46,8 +48,8 @@ function moon() {
 function cloudy(count = 12) {
     const sky = document.getElementById('sky');
     const cloudImages = [
-        'https://pngimg.com/d/cloud_PNG112234.png',
-        'https://www.freeiconspng.com/thumbs/rain-png/rain-clouds-png-27.png'
+        '/assets/imgs/cloud1.png',
+        '/assets/imgs/cloud2.png'
     ];
 
     const total = count + 2;
