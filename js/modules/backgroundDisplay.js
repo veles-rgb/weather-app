@@ -1,7 +1,37 @@
 // backgroundDisplay.js
 // This module handles the background display based on weather conditions
 
-// Check if night time
+import { isBefore, isAfter } from "https://cdn.skypack.dev/date-fns";
+import SunCalc from "https://cdn.skypack.dev/suncalc";
+
+
+// Check IP time (for night / day) and change background
+async function getLocalTime() {
+    const styles = getComputedStyle(document.documentElement);
+    const bgDay = styles.getPropertyValue('--bg-day').trim();
+    const bgDark = styles.getPropertyValue('--bg-dark').trim();
+    const bgNight = styles.getPropertyValue('--bg-night').trim();
+
+    try {
+        const res = await fetch('http://ip-api.com/json/');
+        const data = await res.json();
+        const { lat: latitude, lon: longitude } = data;
+        const now = new Date();
+        const times = SunCalc.getTimes(now, latitude, longitude);
+        const isDark = isBefore(now, times.sunrise) || isAfter(now, times.sunset);
+        if (isDark) {
+            document.body.style.background = bgNight;
+            console.log("Let there be darkness!");
+        } else {
+            document.body.style.background = bgDay;
+            console.log("Let there be light!");
+        }
+    } catch (error) {
+        console.error(err);
+    }
+}
+
+// Check if night time (for searched city)
 function isNightTime(weather) {
     // Convert time strings "HH:mm" or "HH:mm:ss" to minutes since midnight
     const toMinutes = (timeStr) => {
@@ -189,5 +219,5 @@ function loadBackground(weather) {
     }
 }
 
-export { loadBackground, isNightTime };
+export { loadBackground, isNightTime, getLocalTime };
 import { sun, moon, cloudy, rain, snow, hail, fog, wind, thunder, partlyCloudy } from "./background.js";
