@@ -246,6 +246,7 @@ function loadOtherInfoContainer() {
     const weatherContainer = document.getElementById("weather-container");
     const otherInfoContainer = document.createElement("div");
     otherInfoContainer.setAttribute("id", "other-info-container");
+    otherInfoContainer.classList.add("scroll-container");
     weatherContainer.appendChild(otherInfoContainer);
 }
 
