@@ -64,12 +64,15 @@ function cloudy(count = 12) {
         const width = Math.random() * 200 + 600;
         cloud.style.width = `${width}px`;
         cloud.style.height = `${width * 0.6}px`;
+        cloud.style.position = 'absolute';
 
+        // Prevents pushing layout: place clouds slightly offscreen on both ends
         const spacing = 100 / (count - 1);
         const leftPercent = spacing * i;
         const wiggle = Math.random() * 1.5 - 0.75;
+        const leftOffset = -width / 2; // centers cloud visually
 
-        cloud.style.left = `calc(${leftPercent}% + ${wiggle}vw)`;
+        cloud.style.left = `calc(${leftPercent}% + ${wiggle}vw + ${leftOffset}px)`;
         cloud.style.top = `${Math.random() * 40 - 150}px`;
 
         const delay = Math.random() * 3;

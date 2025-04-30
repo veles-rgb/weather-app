@@ -32,6 +32,7 @@ img {
     pointer-events: none;
 }
 
+/* FORM STYLES */
 form {
     padding: 2rem;
     width: 25rem;
@@ -66,14 +67,12 @@ label {
 
 input,
 select {
-    display: flex;
-    align-items: center;
+    display: block;
     width: 14rem;
     height: 2.4rem;
     text-align: center;
     border: 3px solid #7171fb;
     font-size: 1.4rem;
-    text-align: center;
 }
 
 input:focus,
@@ -99,6 +98,7 @@ input[type="submit"]:hover {
     cursor: pointer;
 }
 
+/* SEARCH CONTAINER STYLES (On loaded weather) */
 #search-container {
     display: flex;
     justify-content: center;
@@ -187,6 +187,11 @@ input[type="submit"]:hover {
     }
 }
 
+#newUnits {
+    width: 12rem;
+    border-radius: 1rem;
+}
+
 /* Error message styles */
 .error {
     background-color: rgba(255, 101, 127, 0.5);
@@ -197,11 +202,7 @@ input[type="submit"]:hover {
     font-size: 1.4rem;
 }
 
-#newUnits {
-    width: 12rem;
-    border-radius: 1rem;
-}
-
+/* WEATHER CONTAINER */
 #weather-container {
     width: 70%;
     height: 75%;
@@ -585,15 +586,169 @@ input[type="submit"]:hover {
 
 /* BACKGROUND STYLES */
 #sky {
-    width: 100%;
-    box-sizing: border-box;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    height: 200px;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 0;
     pointer-events: none;
-    z-index: 1;
 }
+
+/* ---------- MEDIA QUERIES ----------*/
+/* Mobile */
+@media (max-width: 767px) {
+    #search-container {
+        width: 90%;
+        flex-direction: row;
+        gap: 0.2rem;
+    }
+
+    form {
+        width: 20rem;
+    }
+
+    #weather-container {
+        width: 100%;
+        height: 90%;
+    }
+
+    #current-location {
+        font-size: 0.8rem;
+    }
+
+    #current-temp-display {
+        font-size: 2rem;
+    }
+
+    #high-low-display {
+        font-size: 0.8rem;
+    }
+
+    #current-condition {
+        font-size: 0.8rem;
+    }
+
+    #condition-icon {
+        width: 4rem;
+    }
+
+    #other-info-grid {
+        display: flex;
+        flex-wrap: wrap;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #eight-h-f-grid {
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #daily-grid {
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+    form {
+        width: 30rem;
+        height: 30rem;
+    }
+
+    form>h1 {
+        font-size: 3rem;
+    }
+
+    label {
+        font-size: 2rem;
+    }
+
+    input,
+    select {
+        width: 15rem;
+        height: 3rem;
+    }
+
+    input[type="submit"] {
+        width: 15rem;
+        height: 4rem;
+        font-size: 2rem;
+    }
+
+    #weather-container {
+        width: 95%;
+        height: 90%;
+    }
+
+    #other-info-grid {
+        display: flex;
+        flex-wrap: wrap;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #eight-h-f-grid {
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #daily-grid {
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* Laptop */
+@media (min-width: 1024px) and (max-width: 1280px) {
+    #weather-container {
+        width: 90%;
+        height: 85%;
+    }
+
+    #other-info-grid {
+        display: flex;
+        flex-wrap: wrap;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #eight-h-f-grid {
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #daily-grid {
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* -----------------------------------*/
 
 /* PARTLY CLOUDY */
 .cloud-partly {
