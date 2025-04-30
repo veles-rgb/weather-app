@@ -1,5 +1,5 @@
 // weather.js
-import { loading, displayError } from "./display.js";
+import { loading } from "./display.js";
 
 export async function fetchWeather(location, units) {
     const apiKey = "8GJRCDX98S75EPJ9H3LVZCY5F";
@@ -16,7 +16,6 @@ export async function fetchWeather(location, units) {
             throw new Error(`API Error: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log(data);
         return data;
     } catch (error) {
         console.error("Error caught:", error);
@@ -38,7 +37,6 @@ export async function fetchHourlyWeather(location, units) {
     try {
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data);
         return data;
     } catch (error) {
         console.error(error);
