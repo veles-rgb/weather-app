@@ -227,7 +227,7 @@ function loadTop(weather) {
     // Current condition icon
     const conditionIcon = document.createElement("img");
     conditionIcon.setAttribute("id", "condition-icon");
-    conditionIcon.src = `/assets/icons/${weather.currentConditions.icon}.svg`;
+    conditionIcon.src = `weather-app/assets/icons/${weather.currentConditions.icon}.svg`;
     // Current condition descriptions
     const conditionDesc = document.createElement("div");
     conditionDesc.setAttribute("id", "condition-desc");
@@ -334,7 +334,7 @@ function loadRiseSetInfo(weather) {
     // sunrise / sunset icon
     const riseSetIcon = document.createElement("img");
     riseSetIcon.classList.add("other-info-icon");
-    riseSetIcon.src = "/assets/icons/riseset.svg";
+    riseSetIcon.src = "weather-app/assets/icons/riseset.svg";
     // Sunrise Sunset inner info divs
     const riseSetInner = document.createElement("div");
     riseSetInner.setAttribute("id", "rise-set-inner");
@@ -383,7 +383,7 @@ function loadWindInfo(weather) {
     windInfoSpeed.textContent = `Speed: ${weather.currentConditions.windspeed} ${speedUnit}`;
     const windSpeedIcon = document.createElement("img");
     windSpeedIcon.classList.add("other-info-icon");
-    windSpeedIcon.src = "/assets/icons/windspeed.svg";
+    windSpeedIcon.src = "weather-app/assets/icons/windspeed.svg";
     const windGust = document.createElement("div");
     windGust.setAttribute("id", "wind-gust-info");
     windGust.textContent = `Gust: ${weather.currentConditions.windgust} ${speedUnit}`;
@@ -404,7 +404,7 @@ function loadHumidityInfo(weather) {
     humidityInfoText.textContent = "Humidity";
     const humidityIcon = document.createElement("img");
     humidityIcon.classList.add("other-info-icon");
-    humidityIcon.src = "/assets/icons/humidity.svg";
+    humidityIcon.src = "weather-app/assets/icons/humidity.svg";
     const humidity = document.createElement("div");
     humidity.setAttribute("id", "humidity");
     humidity.textContent = weather.currentConditions.humidity + "%";
@@ -435,7 +435,7 @@ function loadVisibilityInfo(weather) {
     visibilityInfoText.textContent = "Visibility";
     const visibilityIcon = document.createElement("img");
     visibilityIcon.classList.add("other-info-icon");
-    visibilityIcon.src = "/assets/icons/visibility.svg";
+    visibilityIcon.src = "weather-app/assets/icons/visibility.svg";
     const visibilityDistance = document.createElement("div");
     visibilityDistance.setAttribute("id", "visibility");
     visibilityDistance.textContent = `${weather.currentConditions.visibility} ${distanceUnit}`;
@@ -483,7 +483,7 @@ function loadUvIndexInfo(weather) {
     uvIndexInfoText.textContent = "UV Index";
     const uvIndexIcon = document.createElement("img");
     uvIndexIcon.classList.add("other-info-icon");
-    uvIndexIcon.src = "/assets/icons/uvindex.svg";
+    uvIndexIcon.src = "weather-app/assets/icons/uvindex.svg";
     const uvIndexIndex = document.createElement("div");
     uvIndexIndex.setAttribute("id", "uv-index");
     uvIndexIndex.textContent = weather.currentConditions.uvindex;
@@ -576,7 +576,7 @@ async function load8HForecast(weather) {
                 // Display icon
                 const hourlyIcon = document.createElement("img");
                 hourlyIcon.classList.add("hourly-icon");
-                hourlyIcon.src = `/assets/icons/${hour.icon}.svg`;
+                hourlyIcon.src = `weather-app/assets/icons/${hour.icon}.svg`;
                 // Display temp
                 const hourlyTemp = document.createElement("hourly-temp");
                 hourlyTemp.classList.add("hourly-temp");
@@ -638,7 +638,7 @@ async function loadDailyForecast(weather) {
         // Create icon display
         const dailyIcon = document.createElement("img");
         dailyIcon.classList.add("daily-icon");
-        dailyIcon.src = `/assets/icons/${day.icon}.svg`;
+        dailyIcon.src = `weather-app/assets/icons/${day.icon}.svg`;
         // Create hi lo div
         const dailyHiLo = document.createElement("div");
         dailyHiLo.classList.add("daily-hi-lo");

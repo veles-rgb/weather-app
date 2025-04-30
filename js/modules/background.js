@@ -3,8 +3,8 @@
 function partlyCloudy() {
     const sky = document.getElementById('sky');
     const cloudImages = [
-        '/assets/imgs/cloud1.png',
-        '/assets/imgs/cloud2.png'
+        'weather-app/assets/imgs/cloud1.png',
+        'weather-app/assets/imgs/cloud2.png'
     ];
 
     const cloud = document.createElement('div');
@@ -48,8 +48,8 @@ function moon() {
 function cloudy(count = 12) {
     const sky = document.getElementById('sky');
     const cloudImages = [
-        '/assets/imgs/cloud1.png',
-        '/assets/imgs/cloud2.png'
+        'weather-app/assets/imgs/cloud1.png',
+        'weather-app/assets/imgs/cloud2.png'
     ];
 
     const total = count + 2;
