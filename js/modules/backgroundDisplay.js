@@ -4,21 +4,21 @@
 import { isBefore, isAfter } from "https://cdn.skypack.dev/date-fns";
 import SunCalc from "https://cdn.skypack.dev/suncalc";
 
-
 // Check IP time (for night / day) and change background
 async function getLocalTime() {
     const styles = getComputedStyle(document.documentElement);
     const bgDay = styles.getPropertyValue('--bg-day').trim();
-    const bgDark = styles.getPropertyValue('--bg-dark').trim();
     const bgNight = styles.getPropertyValue('--bg-night').trim();
 
     try {
-        const res = await fetch('https://ip-api.com/json/');
+        const res = await fetch('https://ipinfo.io/json?token=fddd24df7a7b27');
         const data = await res.json();
-        const { lat: latitude, lon: longitude } = data;
+
+        const [latitude, longitude] = data.loc.split(',').map(Number);
         const now = new Date();
         const times = SunCalc.getTimes(now, latitude, longitude);
         const isDark = isBefore(now, times.sunrise) || isAfter(now, times.sunset);
+
         if (isDark) {
             document.body.style.background = bgNight;
             console.log("Let there be darkness!");
@@ -27,9 +27,10 @@ async function getLocalTime() {
             console.log("Let there be light!");
         }
     } catch (error) {
-        console.error(err);
+        console.error("Failed to fetch geolocation data:", error);
     }
 }
+
 
 // Check if night time (for searched city)
 function isNightTime(weather) {
