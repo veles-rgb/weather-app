@@ -18,7 +18,18 @@ body {
     overflow: hidden;
     background: transparent;
     background: #B4B4FC;
-    background: var(--bg-day)
+    background: var(--bg-day);
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+img {
+    pointer-events: none;
 }
 
 form {
@@ -70,6 +81,10 @@ select:focus {
     outline: none;
 }
 
+select:hover {
+    cursor: pointer;
+}
+
 input[type="submit"] {
     flex-direction: column;
     border-radius: 1rem;
@@ -78,6 +93,10 @@ input[type="submit"] {
     margin-top: auto;
     width: 10rem;
     text-align: center;
+}
+
+input[type="submit"]:hover {
+    cursor: pointer;
 }
 
 #search-container {
