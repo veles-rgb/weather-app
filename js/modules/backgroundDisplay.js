@@ -13,7 +13,7 @@ async function getLocalTime() {
     const bgNight = styles.getPropertyValue('--bg-night').trim();
 
     try {
-        const res = await fetch('http://ip-api.com/json/');
+        const res = await fetch('https://ip-api.com/json/');
         const data = await res.json();
         const { lat: latitude, lon: longitude } = data;
         const now = new Date();
